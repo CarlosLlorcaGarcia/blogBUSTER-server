@@ -2,6 +2,8 @@ package net.ausiasmarch.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.thedeanda.lorem.Lorem;
+import com.thedeanda.lorem.LoremIpsum;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -72,4 +74,28 @@ public class PostService {
         return "{\"status\":200,\"response\":" + message + "}";
     }
 
+    public String fill() throws SQLException {
+        ConnectionInterface oConnectionImplementation = ConnectionFactory.getConnection(ConnectionSettings.connectionPool);
+        Connection oConection = oConnectionImplementation.newConnection();
+        
+        Lorem lorem = LoremIpsum.getInstance();
+        int limit = Integer.parseInt(oRequest.getParameter("limit"));
+        
+        String titulo, cuerpo, etiquetas;
+        Gson oGson = new Gson();
+        PostDao oPostDao = new PostDao(oConection);
+        PostBean oPostBean;
+        
+        for (int i = 1; i < limit; i++) {
+            titulo = lorem.getTitle(2, 4);
+            cuerpo = lorem.getParagraphs(2, 4);
+            etiquetas = lorem.getWords(2, 5);
+            oPostBean = new PostBean(titulo, cuerpo, etiquetas);
+            oPostDao.insert(oPostBean);
+        }
+        ResponseBean oResponseBean;
+        oResponseBean = new ResponseBean(200, "OK");
+        oConnectionImplementation.disposeConnection();
+        return oGson.toJson(oResponseBean);
+    }
 }

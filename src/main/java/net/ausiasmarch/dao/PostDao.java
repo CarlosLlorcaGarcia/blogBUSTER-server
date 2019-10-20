@@ -81,5 +81,18 @@ public class PostDao {
         
     return listaPostBean;
     }
+    
+    public Integer insert(PostBean oPostBean) throws SQLException {
+        PreparedStatement oPreparedStatement;
+        String strsql = "INSERT INTO post (titulo,cuerpo,etiquetas) VALUES(?,?,?)";
 
+        oPreparedStatement = oConnection.prepareStatement(strsql);
+
+        oPreparedStatement.setString(1, oPostBean.getTitulo());
+        oPreparedStatement.setString(2, oPostBean.getCuerpo());
+        oPreparedStatement.setString(3, oPostBean.getEtiquetas());
+        //oPreparedStatement.setDate(4, (Date) oPostBean.getFecha());
+        int iResult = oPreparedStatement.executeUpdate();
+        return iResult;
+    }
 }

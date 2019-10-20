@@ -18,6 +18,13 @@ public class PostBean {
     private String etiquetas;
     private Date fecha;
 
+    public PostBean(String titulo, String cuerpo, String etiquetas) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public PostBean() {
+    }
+
     public Integer getId() {
         return id;
     }
@@ -58,6 +65,6 @@ public class PostBean {
         this.fecha = fecha;
     }
 
-  
-    
+
+   
 }
