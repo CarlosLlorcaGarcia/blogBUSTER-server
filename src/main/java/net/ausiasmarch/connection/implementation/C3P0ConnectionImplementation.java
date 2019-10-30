@@ -22,26 +22,19 @@ public class C3P0ConnectionImplementation implements ConnectionInterface {
         config.setMinPoolSize(ConnectionSettings.getDatabaseMinPoolSize);
 
         config.setInitialPoolSize(5);
-
         config.setAcquireIncrement(5);
-
         config.setMaxStatements(100);
-
         oConnection = config.getConnection();
         return oConnection;
-
     }
 
     @Override
     public void disposeConnection() throws SQLException {
-
         if (oConnection != null) {
             oConnection.close();
         }
         if (config != null) {
             config.close();
         }
-
     }
-
 }

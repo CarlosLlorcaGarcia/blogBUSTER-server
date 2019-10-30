@@ -2,7 +2,6 @@ package net.ausiasmarch.connection.implementation;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 import net.ausiasmarch.connection.ConnectionInterface;

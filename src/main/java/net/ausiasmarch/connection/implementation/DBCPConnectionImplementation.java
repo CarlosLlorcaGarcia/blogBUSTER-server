@@ -22,7 +22,6 @@ public class DBCPConnectionImplementation implements ConnectionInterface {
 
         oConnection = config.getConnection();
         return oConnection;
-
     }
 
     @Override
@@ -34,5 +33,4 @@ public class DBCPConnectionImplementation implements ConnectionInterface {
             config.close();
         }
     }
-
 }

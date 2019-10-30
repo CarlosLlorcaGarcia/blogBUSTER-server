@@ -1,9 +1,6 @@
 package net.ausiasmarch.setting;
 
-
-
 public class ConnectionSettings {
-
 	public static enum EnumConstans  {
 		Hikari,
 		DBCP,
@@ -11,7 +8,7 @@ public class ConnectionSettings {
 		C3P0,
 		Vibur
 	};
-
+        
 	public static final EnumConstans connectionPool = EnumConstans.Hikari;
 	public static final String databaseName = "blogbuster";
 	public static final String databaseLogin = "blogbuster";
@@ -25,5 +22,4 @@ public class ConnectionSettings {
 		return "jdbc:mysql://" + ConnectionSettings.databaseHost + ":" + ConnectionSettings.databasePort + "/"
 				+ ConnectionSettings.databaseName;
 	}
-
 }

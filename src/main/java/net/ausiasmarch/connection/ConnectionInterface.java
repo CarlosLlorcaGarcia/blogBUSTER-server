@@ -1,4 +1,3 @@
-
 package net.ausiasmarch.connection;
 
 import java.sql.Connection;

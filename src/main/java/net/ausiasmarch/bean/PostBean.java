@@ -1,34 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.ausiasmarch.bean;
 
+import com.google.gson.annotations.Expose;
 import java.util.Date;
 
-/**
- *
- * @author raznara
- */
-public class PostBean {
+public class PostBean implements BeanInterface {
+
+    @Expose
     private Integer id;
+    @Expose
     private String titulo;
+    @Expose
     private String cuerpo;
+    @Expose
     private String etiquetas;
+    @Expose
     private Date fecha;
 
-    public PostBean(String titulo, String cuerpo, String etiquetas) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public PostBean() {
-    }
-
+    @Override
     public Integer getId() {
         return id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }
@@ -65,6 +58,4 @@ public class PostBean {
         this.fecha = fecha;
     }
 
-
-   
 }

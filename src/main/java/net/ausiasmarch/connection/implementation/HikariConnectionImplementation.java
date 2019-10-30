@@ -2,7 +2,6 @@ package net.ausiasmarch.connection.implementation;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import net.ausiasmarch.connection.ConnectionInterface;
@@ -33,7 +32,6 @@ public class HikariConnectionImplementation implements ConnectionInterface {
         oConnectionPool = new HikariDataSource(config);
         oConnection = (Connection) oConnectionPool.getConnection();
         return oConnection;
-
     }
 
     @Override
@@ -45,5 +43,4 @@ public class HikariConnectionImplementation implements ConnectionInterface {
             oConnectionPool.close();
         }
     }
-
 }

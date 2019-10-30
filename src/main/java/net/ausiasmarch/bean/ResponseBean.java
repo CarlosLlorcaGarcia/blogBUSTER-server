@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.ausiasmarch.bean;
 
-/**
- *
- * @author raznara
- */
 public class ResponseBean {
 
     private int status;
@@ -18,8 +9,6 @@ public class ResponseBean {
         this.status = status;
         this.message = message;
     }
-
-    
     
     /**
      * @return the status
@@ -48,7 +37,5 @@ public class ResponseBean {
     public void setMessage(String message) {
         this.message = message;
     }
-
-    
     
 }

@@ -7,5 +7,4 @@ public class ConfigurationSettings {
 	};
 
 	public static final EnvironmentConstans environment = EnvironmentConstans.Debug;
-
 }
