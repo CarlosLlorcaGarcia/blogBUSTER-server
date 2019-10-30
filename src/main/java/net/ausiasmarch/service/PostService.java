@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.servlet.http.HttpServletRequest;
 import net.ausiasmarch.bean.BeanInterface;
@@ -31,7 +32,7 @@ public class PostService implements ServiceInterface {
         this.oRequest = oRequest;
     }
 
-    @Override
+@Override
     public String get() throws SQLException {
         ConnectionInterface oConnectionImplementation = ConnectionFactory.getConnection(ConnectionSettings.connectionPool);
         Connection oConnection = oConnectionImplementation.newConnection();
@@ -55,8 +56,12 @@ public class PostService implements ServiceInterface {
         Connection oConnection = oConnectionImplementation.newConnection();
         int iRpp = Integer.parseInt(oRequest.getParameter("rpp"));
         int iPage = Integer.parseInt(oRequest.getParameter("page"));
+        List<String> orden = null;
+        if (oRequest.getParameter("order")!=null) {
+        	orden = Arrays.asList(oRequest.getParameter("order").split("\\s*,\\s*"));
+        }
         PostDao oPostDao = new PostDao(oConnection);
-        ArrayList alPostBean = oPostDao.getPage(iPage, iRpp);
+        ArrayList alPostBean = oPostDao.getPage(iPage, iRpp, orden);
         Gson oGson = GsonFactory.getGson();
         String strJson = oGson.toJson(alPostBean);
         if (oConnection != null) {
@@ -156,6 +161,7 @@ public class PostService implements ServiceInterface {
             oConnectionImplementation.disposeConnection();
         }
         return oGson.toJson(oResponseBean);
+
     }
 
     @Override

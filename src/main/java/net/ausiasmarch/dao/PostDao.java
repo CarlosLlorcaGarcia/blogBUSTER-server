@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import net.ausiasmarch.bean.BeanInterface;
@@ -80,11 +79,77 @@ public class PostDao implements DaoInterface {
             oPostBean.setId(rs.getInt("id"));
             oPostBean.setTitulo(rs.getString("titulo"));
             oPostBean.setCuerpo(rs.getString("cuerpo"));
-            oPostBean.setEtiquetas(rs.getString("etiquetas"));
+            oPostBean.setEtiquetas(rs.getString("etiquetas"));          
             //oPostBean.setFecha(new Timestamp(rs.getTimestamp("fecha").getTime()));
-            listaPostBean.add(oPostBean);
+            listaPostBean.add(oPostBean);        
         }
         return listaPostBean;
+    }
+
+    @Override
+    public ArrayList<PostBean> getPage(int page, int limit, List<String> orden) throws SQLException {
+
+        PreparedStatement oPreparedStatement;
+        ResultSet oResultSet;
+        int offset;
+
+        if (page == 1) {
+            offset = 0;
+        } else {
+            offset = (limit * page) - limit;
+        }
+
+        if (orden == null) {
+        	oPreparedStatement = oConnection.prepareStatement("SELECT * FROM post LIMIT ? OFFSET ?");
+        	oPreparedStatement.setInt(1, limit);
+            oPreparedStatement.setInt(2, offset);
+        } else {
+        	String sqlQuery = "SELECT * FROM post ";
+        	sqlQuery += "ORDER BY ";
+        	for (int i = 1; i <= orden.size(); i++) {
+        		if (orden.get((i-1)).equalsIgnoreCase("asc")) {
+        			sqlQuery += "ASC ";
+        		} else if (orden.get((i-1)).equalsIgnoreCase("desc")) {
+        			sqlQuery += "DESC ";
+        		} else {
+        			sqlQuery += "? ";
+        		}
+        	}
+        	sqlQuery += "LIMIT ? OFFSET ?";
+        	oPreparedStatement = oConnection.prepareStatement(sqlQuery);
+        	for (int i = 1; i < orden.size(); i++) {
+        		if (orden.get((i-1)).equalsIgnoreCase("id")) {
+        			oPreparedStatement.setInt(i, 1);
+        		} else if (orden.get((i-1)).equalsIgnoreCase("titulo")) {
+        			oPreparedStatement.setInt(i, 2);
+        		} else if (orden.get((i-1)).equalsIgnoreCase("cuerpo")) {
+        			oPreparedStatement.setInt(i, 3);
+        		} else if (orden.get((i-1)).equalsIgnoreCase("etiquetas")) {
+        			oPreparedStatement.setInt(i, 4);
+        		} else if (orden.get((i-1)).equalsIgnoreCase("fecha")) {
+        			oPreparedStatement.setInt(i, 5);
+        		}
+        		
+        	}
+        	oPreparedStatement.setInt((orden.size()), limit);
+            oPreparedStatement.setInt((orden.size()+1), offset);
+        }
+        
+        oResultSet = oPreparedStatement.executeQuery();
+
+        ArrayList<PostBean> oPostBeanList = new ArrayList<>();
+        while (oResultSet.next()) {
+            PostBean oPostBean = new PostBean();
+            oPostBean.setId(oResultSet.getInt("id"));
+            oPostBean.setTitulo(oResultSet.getString("titulo"));
+            oPostBean.setCuerpo(oResultSet.getString("cuerpo"));
+            oPostBean.setEtiquetas(oResultSet.getString("etiquetas"));
+            oPostBean.setFecha(oResultSet.getDate("fecha"));
+
+            oPostBeanList.add(oPostBean);
+        }
+
+        return oPostBeanList;
     }
 
     @Override
@@ -145,19 +210,5 @@ public class PostDao implements DaoInterface {
         }
 
         return oPostBeanList;
-    }
-    
-    public Integer insert(PostBean oPostBean) throws SQLException {
-        PreparedStatement oPreparedStatement;
-        String strsql = "INSERT INTO post (titulo,cuerpo,etiquetas) VALUES(?,?,?)";
-
-        oPreparedStatement = oConnection.prepareStatement(strsql);
-
-        oPreparedStatement.setString(1, oPostBean.getTitulo());
-        oPreparedStatement.setString(2, oPostBean.getCuerpo());
-        oPreparedStatement.setString(3, oPostBean.getEtiquetas());
-        //oPreparedStatement.setDate(4, (Date) oPostBean.getFecha());
-        int iResult = oPreparedStatement.executeUpdate();
-        return iResult;
     }
 }
