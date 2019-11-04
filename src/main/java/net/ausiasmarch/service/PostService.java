@@ -24,9 +24,9 @@ import net.ausiasmarch.setting.ConnectionSettings;
 public class PostService implements ServiceInterface {
 
     HttpServletRequest oRequest = null;
-    String[] frasesInicio = {"El fin de la estructura ", "La agrupacion logica ", "Una visión de una idea que "};
-    String[] frasesMitad = {"dirige los objetivos ", "garantiza el deseo ", " sin la capacidad de ejecución"};
-    String[] frasesFinal = {"de la reestructuracion agraria.", " en el uso de la misma.", " es únicamente una alucinación."};
+    String[] frasesInicio = {"El fin de la estructura ", "La agrupacion logica ", "El objetivo conjunto ", "Una dinámica apropiada "};
+    String[] frasesMitad = {"dirige los objetivos ", "garantiza el deseo ", "mejora la capacidad ", "recupera el concepto "};
+    String[] frasesFinal = {"de la reestructuracion requerida. ", "en la aplicación. ", "por sus innumerables beneficios. ", "contra la inficiencia. "};
 
     public PostService(HttpServletRequest oRequest) {
         this.oRequest = oRequest;
@@ -47,7 +47,7 @@ public class PostService implements ServiceInterface {
         if (oConnectionImplementation != null) {
             oConnectionImplementation.disposeConnection();
         }
-        return "{\"status\":200,\"response\":" + strJson + "}";
+        return "{\"status\":200,\"message\":" + strJson + "}";
     }
 
     @Override
@@ -70,7 +70,7 @@ public class PostService implements ServiceInterface {
         if (oConnectionImplementation != null) {
             oConnectionImplementation.disposeConnection();
         }
-        return "{\"status\":200,\"response\":" + strJson + "}";
+        return "{\"status\":200,\"message\":" + strJson + "}";
     }
 
     @Override
@@ -86,9 +86,9 @@ public class PostService implements ServiceInterface {
             oConnectionImplementation.disposeConnection();
         }
         if (iCount < 0) {
-            return "{\"status\":500,\"response\":" + iCount + "}";
+            return "{\"status\":500,\"message\":" + iCount + "}";
         } else {
-            return "{\"status\":200,\"response\":" + iCount + "}";
+            return "{\"status\":200,\"message\":" + iCount + "}";
         }
     }
 
@@ -136,7 +136,7 @@ public class PostService implements ServiceInterface {
         if (oConnectionImplementation != null) {
             oConnectionImplementation.disposeConnection();
         }
-        return "{\"status\":200,\"response\":" + message + "}";
+        return "{\"status\":200,\"message\":" + message + "}";
     }
 
     @Override

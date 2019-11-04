@@ -1,25 +1,23 @@
 package net.ausiasmarch.bean;
 
-public class ResponseBean {
+import com.google.gson.annotations.Expose;
 
+
+public class ResponseBean {
+    @Expose
     private int status;
+    @Expose
     private String message;
 
     public ResponseBean(int status, String message) {
         this.status = status;
         this.message = message;
     }
-    
-    /**
-     * @return the status
-     */
+
     public int getStatus() {
         return status;
     }
 
-    /**
-     * @param status the status to set
-     */
     public void setStatus(int status) {
         this.status = status;
     }
@@ -31,9 +29,6 @@ public class ResponseBean {
         return message;
     }
 
-    /**
-     * @param message the message to set
-     */
     public void setMessage(String message) {
         this.message = message;
     }
